@@ -1,0 +1,94 @@
+import React, { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserService from '../../services/UserService';
+// import './Login.css'; // Import your CSS file
+
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      role: 'patient',
+      loggedIn: false,
+      error: '', // To store error messages
+      
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleLogin = (event) => {
+    event.preventDefault();
+  
+    const { username, password } = this.state;
+  
+    // Call your authentication service using UserService
+    UserService.login(username, password)
+      .then((res) => {
+        if (res.status === 200) {
+          this.setState({ loggedIn: true, error: '' });
+          if (this.state.role === 'patient') {
+            this.props.history.push("/patient-dashboard");
+          } else if (this.state.role === 'doctor') {
+            this.props.history.push('/doctor-dashboard');
+          }
+        } else {
+          console.log("Response from the server:", res.data);
+          this.setState({ error: 'Login failed. Please check your credentials.' });
+        }
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+        this.setState({ error: 'An error occurred during login. Please try again.' });
+      });
+  
+  };
+
+  render() {
+    return (
+      <div className="login-container"> {/* Add the login container class */}
+        <h2>Login</h2>
+        <form>
+          <div>
+            <label>Username</label>
+            <input
+              type="text"
+              id='username'
+              name="username"
+              value={this.state.username}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              type="password"
+              id='password'
+              name="password"
+              value={this.state.password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Role</label>
+            <select name="role" value={this.state.role} onChange={this.handleInputChange}>
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+            </select>
+          </div>
+          <button type="submit" className="login-button" onClick={this.handleLogin}>Login</button> {/* Add the login-button class */}
+        </form>
+
+        {this.state.error && <div className="error">{this.state.error}</div>} {/* Add the error class */}
+      </div>
+    );
+  }
+}
+
+export default Login;

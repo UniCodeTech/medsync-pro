@@ -1,0 +1,196 @@
+import React, { Component } from 'react';
+
+import './Register.css';
+import UserService from '../../services/UserService';
+
+class PatientRegister extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.match.params.id,
+      firstName: '',
+      lastName: '',
+      nic: '',
+      address: '',
+      dob: '',
+      tp: '',
+      blood: '',
+      registeredUser: null, // Store registered user details
+      error: null, // Error message
+    }
+    this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
+    this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+    this.changeNICHandler = this.changeNICHandler.bind(this);
+    this.changeAddressHandler = this.changeAddressHandler.bind(this);
+    this.changeDOBHandler = this.changeDOBHandler.bind(this);
+    this.changeTPHandler = this.changeTPHandler.bind(this);
+    this.changeBloodHandler = this.changeBloodHandler.bind(this);
+  }
+
+  componentDidMount(){
+    if(this.state.id === '_add'){
+        return
+    }else{
+        UserService.getPatientById(this.state.id).then( (res) =>{
+            let patient =res.data;
+            this.setState({firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                nic: this.state.nic,
+                address: this.state.address,
+                dob: this.state.dob,
+                tp: this.state.tp,
+                blood: this.state.blood});
+        });
+    }
+  }
+
+  savePatient = (e) => {
+    e.preventDefault();
+    let patient = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        nic: this.state.nic,
+        address: this.state.address,
+        dob: this.state.dob,
+        tp: this.state.tp,
+        blood: this.state.blood,
+      };
+      console.log('Patient => '+ JSON.stringify(patient));
+
+      if(this.state.id === '_add'){
+        UserService.createPatient(patient).then(res =>{
+            this.props.history.push('/patients-register');
+        });
+      }else{
+        UserService.updatePatient(patient, this.state.id).then(res =>{
+            this.props.history.push('/patients');
+        });
+      }
+  }
+
+  changeFirstNameHandler= (event) => {
+    this.setState({firstName: event.target.value});
+  }
+  changeLastNameHandler= (event) => {
+    this.setState({lastName: event.target.value});
+  }
+  changeNICHandler= (event) => {
+    this.setState({nic: event.target.value});
+  }
+  changeAddressHandler= (event) => {
+    this.setState({address: event.target.value});
+  }
+  changeDOBHandler= (event) => {
+    this.setState({dob: event.target.value});
+  }
+  changeTPHandler= (event) => {
+    this.setState({tp: event.target.value});
+  }
+  changeBloodHandler= (event) => {
+    this.setState({blood: event.target.value});
+  }
+
+  cancel(){
+    this.props.history.push('/');
+  }
+
+  getTitle(){
+    if(this.state.id === '_add'){
+        return <h2>Registration Form</h2>
+    }else{
+        <h2>Update Patient</h2>
+    }
+  }
+
+  render() {
+    return (
+      <div className="registration-form">
+        <div className="title">
+        {
+            this.getTitle()
+        }
+        </div>
+        <div className="form-group">
+          <label htmlFor="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={this.state.firstName}
+            onChange={this.changeFirstNameHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={this.state.lastName}
+            onChange={this.changeLastNameHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="nic">NIC Number:</label>
+          <input
+            type="text"
+            id="nic"
+            name="nic"
+            value={this.state.nic}
+            onChange={this.changeNICHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={this.state.address}
+            onChange={this.changeAddressHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="dob">Date Of Birth:</label>
+          <input
+            type="text"
+            id="dob"
+            name="dob"
+            value={this.state.dob}
+            onChange={this.changeDOBHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="tp">Contact Number:</label>
+          <input
+            type="text"
+            id="tp"
+            name="tp"
+            value={this.state.tp}
+            onChange={this.changeTPHandler}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="blood">Blood Group:</label>
+          <input
+            type="text"
+            id="blood"
+            name="blood"
+            value={this.state.blood}
+            onChange={this.changeBloodHandler}
+          />
+        </div>
+        <div className="button-group">
+          <button className="register-button" onClick={this.savePatient}>
+            Register
+          </button>
+          <button className="cancel-button" onClick={this.cancel.bind(this)}>
+            Cancel
+          </button>          
+        </div>
+      </div>
+    );
+  }
+}
+
+export default PatientRegister;

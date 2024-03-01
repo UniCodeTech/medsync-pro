@@ -1,0 +1,63 @@
+/* Login.css */
+  .login-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #007ACC;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  .login-button {
+    background-color: #007ACC;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s, color 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #005b91;
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .error {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .btn-success {
+    background-color: #007ACC;; /* Your custom background color */
+    color: white; /* Text color */
+    border: none; /* Remove the border */
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s, color 0.3s;
+  }
+  
+  /* Add a hover effect to the button */
+  .btn-success:hover {
+    background-color: #005893; /* Slightly darker shade on hover */
+    transform: scale(1.05); /* Slight scaling on hover for a realistic touch */
+  }
+  

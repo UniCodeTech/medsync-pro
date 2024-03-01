@@ -1,0 +1,144 @@
+before add findDoctorNameByID
+
+import React, { useState, useEffect } from 'react';
+import AppointmentService from '../../services/AppointmentService';
+import DoctorService from '../../services/DoctorService';
+import UserService from '../../services/UserService';
+
+function AppointmentDashboard() {
+  const [appointments, setAppointments] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredAppointments, setFilteredAppointments] = useState([]);
+
+  useEffect(() => {
+    loadAppointments();
+  }, []);
+
+  useEffect(() => {
+    filterAppointments();
+  }, [searchQuery, appointments]);
+
+  const loadAppointments = () => {
+    // Fetch all appointments directly from AppointmentService.
+    AppointmentService.getAllAppointments()
+      .then((response) => {
+        setAppointments(response.data);
+        loadDoctorNames(response.data);
+        loadPatientNames(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching appointments: ', error);
+      });
+  };
+
+  const loadDoctorNames = (appointments) => {
+    // Fetch and set doctor names for each appointment.
+    const doctorIds = appointments.map((appointment) => appointment.doctorId);
+    const doctorIdsString = doctorIds.join(','); // Convert the array to a comma-separated string
+  
+    DoctorService.getDoctorNameById(doctorIdsString) // Pass the comma-separated string
+      .then((response) => {
+        const doctorNamesMap = {};
+        response.data.forEach((doctor) => {
+          doctorNamesMap[doctor.id] = doctor.name;
+          console.log('DoctorService Response Data:', response.data);
+        });
+  
+        // Update the state with doctor names.
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) => ({
+            ...appointment,
+            doctorName: doctorNamesMap[appointment.doctorId],
+          }))
+        );
+      })
+      .catch((error) => {
+        console.error('Error fetching doctor names: ', error);
+      });
+      
+  };
+
+
+  const loadPatientNames = (appointments) => {
+    // Fetch and set patient names for each appointment.
+    const patientIds = appointments.map((appointment) => appointment.patientId);
+    const promises = patientIds.map((patientId) =>
+      UserService.findPatientByID(patientId)
+    );
+
+    Promise.all(promises)
+      .then((patientData) => {
+        const patientNamesMap = {};
+        patientData.forEach((patient, index) => {
+          patientNamesMap[patientIds[index]] = patient.name;
+        });
+
+        // Update the state with patient names.
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((appointment) => ({
+            ...appointment,
+            patientName: patientNamesMap[appointment.patientId],
+          }))
+        );
+      })
+      .catch((error) => {
+        console.error('Error fetching patient names: ', error);
+      });
+  };
+
+
+  const filterAppointments = () => {
+    if (searchQuery === '') {
+      setFilteredAppointments(appointments);
+    } else {
+      const filtered = appointments.filter((appointment) =>
+        (appointment.appointmentNumber || '').toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredAppointments(filtered);
+    }
+  };
+
+  return (
+    <div className="container">
+      <h1>Appointment Details</h1>
+      <div>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by Appointment Number"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Patient Name</th>
+            <th>Doctor Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>Appointment Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredAppointments.map((appointment) => (
+            <tr key={appointment.id}>
+              <td>{appointment.id}</td>
+              <td>{appointment.patientName}</td>
+              <td>{appointment.doctorName}</td>
+              <td>{appointment.date}</td>
+              <td>{appointment.time}</td>
+              <td>{appointment.description}</td>
+              <td>{appointment.appointmentNumber}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default AppointmentDashboard;

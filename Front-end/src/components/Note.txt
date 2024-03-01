@@ -1,0 +1,2 @@
+<Route path="/patient-dashboard/:userId" element={<PatientDashboard />} />
+<Route path="/patient-dashboard" Component={PatientDashboard}  ></Route>

@@ -1,0 +1,21 @@
+import React, { Component } from 'react';
+import './Navbar.css';
+
+class Navbar extends Component {
+    state = {  }
+    render() { 
+        return (  
+            <nav className="navbar">
+                <div className="logo-text">
+                    <span>MedSync</span> <strong>Pro</strong>
+                </div>
+                <div className="navbar-actions">
+                    <button className="button">Login</button>
+                </div>
+                
+            </nav>
+        );
+    }
+}
+ 
+export default Navbar;

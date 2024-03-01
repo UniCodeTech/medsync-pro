@@ -1,0 +1,51 @@
+// If NIC is not taken, you can proceed to create the patient
+            const patient = {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              nic: formData.nic,
+              address: formData.address,
+              dateOfBirth: formData.dateOfBirth,
+              age: formData.age,
+              contactNumber: formData.contactNumber,
+              bloodGroup: formData.bloodGroup,
+              gender: formData.gender,
+            };
+  
+            console.log('Patient => ' + JSON.stringify(patient));
+  
+            UserService.createPatient(patient)
+              .then((res) => {
+                // Patient created successfully, you can navigate or perform other actions
+                navigate(-1);
+              })
+              .catch((error) => {
+                console.error('Error creating patient: ', error);
+              });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+try{
+        const resp = UserService.existsByNic(nic);
+        if(resp.data){
+          newErrors.nic = 'This NIC is already in use';
+          isValid = false;
+        }
+      } catch(error){
+        console.error('Error checking NIC:', error);
+      }

@@ -1,0 +1,56 @@
+/* Add this CSS to your stylesheet or CSS file */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007ACC;
+    padding-top: 15px;
+    padding-left: 50px;
+    padding-right: 40px;
+    padding-bottom: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .logo-text span {
+    font-weight: normal;
+  }
+  
+  .logo-text strong {
+    font-weight: bold;
+  }
+  
+  
+  .navbar-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button {
+    background-color: #fff;
+    color: #007ACC;
+    border: 2px solid #ffffff; /* Use a border to create an outline */
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 20px; /* Increase the border-radius to make it rounded */
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.2s, color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: transparent; /* Make the background transparent */
+    color: #ffffff; /*Set the text color to the original blue */
+    transform: scale(1.05);
+    border: 2px solid #ffffff; /* Slightly darker border on hover */
+  }
+  
+  
+
+  

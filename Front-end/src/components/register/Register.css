@@ -1,0 +1,105 @@
+.registration-form {
+    width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ccc;
+    /* text-align: center; Center text within the form */
+  }
+  
+  .title {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px; /* Add some space between title and form */
+  }
+  
+  .form-group {
+    margin: 10px 0;
+  }
+  
+  .form-group label {
+    text-align: left;
+    font-weight: normal;
+  }
+  
+  input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+  }
+  
+  .button-group {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    align-items: center;
+  }
+  
+  .register-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+  }
+  
+  .register-button:hover {
+    background-color: #45a049;
+  }
+  
+  .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+  
+  .cancel-button:hover {
+    background-color: #d32f2f;
+  }
+
+  .error-message {
+    color: #ff0000; /* Red text color */
+    font-size: 14px; /* Font size */
+    margin-top: 10px; /* Spacing from the form elements */
+  }
+  
+  .user-details-container {
+    background-color: #f0f0f0; /* Background color */
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Spacing inside the container */
+    margin-top: 20px; /* Margin from the form */
+  }
+  
+  /* Style for the user details text */
+  .user-details-text {
+    font-size: 16px; /* Font size */
+    color: #333; /* Text color */
+  }
+  
+  /* Style for the user details table */
+  .user-details-table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Collapse borders */
+    margin-top: 10px; /* Spacing from text */
+  }
+  
+  /* Style for table headers */
+  .user-details-table th {
+    background-color: #f5f5f5; /* Header background color */
+    font-weight: bold; /* Bold text for headers */
+    text-align: left; /* Align text to the left */
+    padding: 8px; /* Padding for headers */
+  }
+  
+  /* Style for table cells */
+  .user-details-table td {
+    padding: 8px; /* Padding for cells */
+    border: 1px solid #ccc; /* Cell borders */
+  }

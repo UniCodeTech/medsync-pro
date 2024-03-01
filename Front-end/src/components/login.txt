@@ -1,0 +1,63 @@
+import React, { Component } from 'react';
+import './Login.css';
+
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: '',
+      error: '',
+    };
+  }
+
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleLogin = () => {
+    const id = this.state;
+  };
+
+  checkID = (e) => {
+    e.preventDefault();
+    
+  }
+
+  
+
+  render() {
+    return (
+      <div>
+        <div className='container'>
+          <div className='row'>
+            <div className='card col-md-6 offset-md-3 offset-md-3'>
+              <h3 className="text-center">Login</h3>
+              <div className='card-body'>
+                <form>
+                  <div className='form-group'>
+                    <label>ID:</label>
+                    <input
+                      type="text"
+                      placeholder='Enter your ID'
+                      name='id'
+                      className='form-control'
+                      value={this.state.id}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                  <button className='btn btn-success' type="button" onClick={this.handleLogin}>
+                    Log in
+                  </button>
+                  {this.state.error && <div className="error">{this.state.error}</div>}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Login;
